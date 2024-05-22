@@ -53,7 +53,7 @@ System::Void Practise::MyForm::add_button_Click(System::Object^ sender, System::
     }
 }
 
-// ‘ункци€ дл€ удалени€ строк / столбцов / €чеек
+// ‘ункци€ дл€ удалени€ 
 System::Void Practise::MyForm::del_button_Click(System::Object^ sender, System::EventArgs^ e)
 {
     int i, j , flag = 1;
@@ -240,50 +240,54 @@ System::Void Practise::MyForm::UpdateMatchingRows()
     Int64 tb_home_num = 0;
     if (homeNum->Text != "")
     {
-        tb_home_num = save_convertToInt64(homeNum->Text);
+        tb_home_num = save_convertToInt64(homeNum->Text, "¬веденный номер дома некорректен");
         conditionArray[1] = 1;
         conditions++;
+        // если несконвертировалось, нет смысла продолжать
+        if (convertion_error_flag) return;
 
     }
     Int64 tb_year = 0;
     if (yearOfOpenning->Text != "")
     {
-        tb_year = save_convertToInt64(yearOfOpenning->Text);
+        tb_year = save_convertToInt64(yearOfOpenning->Text, "¬веденный год некорректен");
         conditionArray[2] = 1;
         conditions++;
+
+        if (convertion_error_flag) return;
 
     }
     Int64 tb_square = 0;
     if (Square->Text != "")
     {
-        tb_square = save_convertToInt64(Square->Text);
+        tb_square = save_convertToInt64(Square->Text, "¬веденна€ площадь участка некорректна");
         conditionArray[3] = 1;
         conditions++;
-
+        if (convertion_error_flag) return;
     }
     Int64 tb_humans = 0;
     if (humansCount->Text != "")
     {
-        tb_humans = save_convertToInt64(humansCount->Text);
+        tb_humans = save_convertToInt64(humansCount->Text, "¬веденное количество жильцов некорректно");
         conditionArray[4] = 1;
         conditions++;
-
+        if (convertion_error_flag) return;
     }
     Int64 tb_floors = 0;
     if (floorsCount->Text != "")
     {
-        tb_floors = save_convertToInt64(floorsCount->Text);
+        tb_floors = save_convertToInt64(floorsCount->Text, "¬веденное количество этажей некорректно");
         conditionArray[5] = 1;
         conditions++;
-
+        if (convertion_error_flag) return;
     }
     Int64 tb_flats = 0;
     if (flatsCount->Text != "")
     {
-        tb_flats = save_convertToInt64(flatsCount->Text);
+        tb_flats = save_convertToInt64(flatsCount->Text, "¬веденнколичество кварир некорректно");
         conditionArray[6] = 1;
         conditions++;
-
+        if (convertion_error_flag) return;
     }
     // если есть услови€
     if (conditions)
@@ -362,7 +366,7 @@ System::Void Practise::MyForm::UpdateMatchingRows()
 
 }
 
-Int64 Practise::MyForm::save_convertToInt64(String^ str)
+Int64 Practise::MyForm::save_convertToInt64(String^ str, String^ error_message)
 {
     Int64 num;
     try
@@ -371,7 +375,8 @@ Int64 Practise::MyForm::save_convertToInt64(String^ str)
     }
     catch(System::FormatException^)
     {
-        MessageBox::Show("¬веденна€ строка недопустима дл€ преобразовани€ в число", "ќшибка");
+        MessageBox::Show(error_message, "ќшибка");
+        convertion_error_flag = true;
         return -1;
     }
     return num;

@@ -98,7 +98,7 @@ namespace Practise {
 
 	private: System::Windows::Forms::TextBox^ humansCount;
 
-
+	private: bool convertion_error_flag = false;
 
 
 	private: System::Windows::Forms::Button^ button_sign;
@@ -709,7 +709,7 @@ private: System::Windows::Forms::Button^ button_sign_5;
 		// перезагружаем данные из файлика
 		resetData("example.txt");
 	}
-	private: Int64 save_convertToInt64(String^ str);
+	private: Int64 save_convertToInt64(String^ str, String^ error_message);
 	private: Boolean signCondition(Int64 num1, Int64 num2, String^ sign);
 
 
