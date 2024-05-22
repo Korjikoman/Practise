@@ -119,6 +119,12 @@ private: System::Windows::Forms::Button^ button_sign_5;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ floors;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ flats;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^ humanz;
+private: System::Windows::Forms::Label^ adm_label;
+
+private: System::Windows::Forms::TextBox^ admin_textbox;
+
+private: System::Windows::Forms::Button^ admin_mode_button;
+
 
 
 
@@ -210,6 +216,9 @@ private: System::Windows::Forms::Button^ button_sign_5;
 			this->button_sign_2 = (gcnew System::Windows::Forms::Button());
 			this->button_sign_1 = (gcnew System::Windows::Forms::Button());
 			this->button_sign_5 = (gcnew System::Windows::Forms::Button());
+			this->adm_label = (gcnew System::Windows::Forms::Label());
+			this->admin_textbox = (gcnew System::Windows::Forms::TextBox());
+			this->admin_mode_button = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
@@ -224,9 +233,10 @@ private: System::Windows::Forms::Button^ button_sign_5;
 				this->street_name,
 					this->home_number, this->year, this->s, this->floors, this->flats, this->humanz
 			});
-			this->dataGridView1->Location = System::Drawing::Point(262, 38);
+			this->dataGridView1->Enabled = false;
+			this->dataGridView1->Location = System::Drawing::Point(262, 66);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(732, 372);
+			this->dataGridView1->Size = System::Drawing::Size(732, 344);
 			this->dataGridView1->TabIndex = 0;
 			this->dataGridView1->CellBeginEdit += gcnew System::Windows::Forms::DataGridViewCellCancelEventHandler(this, &MyForm::dataGridView1_CellBeginEdit);
 			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MyForm::dataGridView1_CellContentClick);
@@ -397,6 +407,7 @@ private: System::Windows::Forms::Button^ button_sign_5;
 			this->del_button->TabIndex = 1;
 			this->del_button->Text = L"удалить";
 			this->del_button->UseVisualStyleBackColor = true;
+			this->del_button->Visible = false;
 			this->del_button->Click += gcnew System::EventHandler(this, &MyForm::del_button_Click);
 			// 
 			// add_button
@@ -581,12 +592,41 @@ private: System::Windows::Forms::Button^ button_sign_5;
 			this->button_sign_5->UseVisualStyleBackColor = true;
 			this->button_sign_5->Click += gcnew System::EventHandler(this, &MyForm::button_sign_Click);
 			// 
+			// adm_label
+			// 
+			this->adm_label->AutoSize = true;
+			this->adm_label->Location = System::Drawing::Point(308, 38);
+			this->adm_label->Name = L"adm_label";
+			this->adm_label->Size = System::Drawing::Size(138, 13);
+			this->adm_label->TabIndex = 48;
+			this->adm_label->Text = L"Пароль для входа в admin";
+			// 
+			// admin_textbox
+			// 
+			this->admin_textbox->Location = System::Drawing::Point(467, 38);
+			this->admin_textbox->Name = L"admin_textbox";
+			this->admin_textbox->Size = System::Drawing::Size(171, 20);
+			this->admin_textbox->TabIndex = 49;
+			// 
+			// admin_mode_button
+			// 
+			this->admin_mode_button->Location = System::Drawing::Point(662, 38);
+			this->admin_mode_button->Name = L"admin_mode_button";
+			this->admin_mode_button->Size = System::Drawing::Size(126, 23);
+			this->admin_mode_button->TabIndex = 50;
+			this->admin_mode_button->Text = L"admin_mode";
+			this->admin_mode_button->UseVisualStyleBackColor = true;
+			this->admin_mode_button->Click += gcnew System::EventHandler(this, &MyForm::admin_mode_button_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(1006, 609);
+			this->Controls->Add(this->admin_mode_button);
+			this->Controls->Add(this->admin_textbox);
+			this->Controls->Add(this->adm_label);
 			this->Controls->Add(this->button_sign_5);
 			this->Controls->Add(this->button_sign_1);
 			this->Controls->Add(this->button_sign_2);
@@ -729,6 +769,16 @@ private: System::Windows::Forms::Button^ button_sign_5;
 		Game^ obj1 = gcnew Game();
 		obj1->ShowDialog();
 	}
+private: System::Void admin_mode_button_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	if (this->admin_textbox->Text == "123") {
+		this->del_button->Visible = true;
+		this->dataGridView1->Enabled = true;
+		this->admin_mode_button->Visible = false;
+		this->adm_label->Visible = false;
+		this->admin_textbox->Visible = false;
+	}
+}
 };
 	
 
