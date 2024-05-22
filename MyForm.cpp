@@ -17,7 +17,6 @@ void main(array<String^>^ args) {
 // Добавляем данные из стороннего файла
 System::Void Practise::MyForm::add_button_Click(System::Object^ sender, System::EventArgs^ e)
 {
-    int counter = 0;
     OpenFileDialog^ openFileDialog1 = gcnew OpenFileDialog;
     openFileDialog1->FileName = "example.txt";
     openFileDialog1->Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"; // Добавляем фильтр для текстовых файлов
@@ -30,7 +29,6 @@ System::Void Practise::MyForm::add_button_Click(System::Object^ sender, System::
             String^ line;
 
             line = file->ReadLine();
-            counter++;
             if (line != nullptr)
             {
                 array<String^>^ cells = line->Split(' '); // Разделение строки на ячейки
@@ -43,7 +41,6 @@ System::Void Practise::MyForm::add_button_Click(System::Object^ sender, System::
                     cells = line->Split(' '); // Разделение строки на ячейки
                     dataGridView1->Rows->Add(cells); // Добавление строки в DataGridView
                 }
-                counter++;
             }
             fileUploaded = true;
             MessageBox::Show("Данные добавлены", "Успешно");
