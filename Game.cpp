@@ -38,7 +38,7 @@ System::Void Practise::Game::fromFileToData(String^ filePath, Dictionary<String^
 
                     // Добавляем слово в массив по ключу
                     wordMap[firstLetter]->Add(word);
-                   
+                    countElems++;
                 }
             }
         }
@@ -74,6 +74,11 @@ System::Void Practise::Game::CompareWordsWithKey( String^ key,  String^ inputStr
 
                 labelPrint(city);
                 usedWords[key]->Add(city);
+                countElems--;
+                if (update_handler()) {
+                    MessageBox::Show("Вы выиграли!", "Victory", MessageBoxButtons::OK, MessageBoxIcon::Information);
+                    restarting();
+                }
                 break;
             }
         }
@@ -83,6 +88,12 @@ System::Void Practise::Game::CompareWordsWithKey( String^ key,  String^ inputStr
 
                 labelPrint(city);
                 usedWords[key]->Add(city);
+                countElems--;
+                if (update_handler()) {
+                    MessageBox::Show("Вы выиграли!", "Victory", MessageBoxButtons::OK, MessageBoxIcon::Information);
+
+                    restarting();
+                }
                 break;
             }
         }
@@ -157,5 +168,19 @@ bool Practise::Game::digitsCheck(String^ string)
     }
 
     return hasDigits && hasPunctuation && hasSpaces;
+}
+
+bool Practise::Game::update_handler()
+{
+    return countElems == 0;
+}
+
+System::Void Practise::Game::restarting()
+{
+    wordMap->Clear();
+    usedWords->Clear();
+    countElems = 0;
+    outputCity->Visible = false;
+
 }
 

@@ -79,7 +79,8 @@ namespace Practise {
 
 
 	private: Dictionary<String^, List<String^>^>^ usedWords = gcnew Dictionary<String^, List<String^>^>();
-
+	private: System::Windows::Forms::Button^ restart;
+	private: int countElems = 0;
 
 
 	private:
@@ -114,6 +115,7 @@ namespace Practise {
 			this->userInput = (gcnew System::Windows::Forms::TextBox());
 			this->outputCity = (gcnew System::Windows::Forms::Label());
 			this->answer = (gcnew System::Windows::Forms::Button());
+			this->restart = (gcnew System::Windows::Forms::Button());
 			this->contextMenuStrip1->SuspendLayout();
 			this->contextMenuStrip3->SuspendLayout();
 			this->contextMenuStrip4->SuspendLayout();
@@ -254,11 +256,22 @@ namespace Practise {
 			this->answer->UseVisualStyleBackColor = true;
 			this->answer->Click += gcnew System::EventHandler(this, &Game::answer_Click);
 			// 
+			// restart
+			// 
+			this->restart->Location = System::Drawing::Point(628, 312);
+			this->restart->Name = L"restart";
+			this->restart->Size = System::Drawing::Size(94, 23);
+			this->restart->TabIndex = 43;
+			this->restart->Text = L"Ì‡˜‡Ú¸ Á‡ÌÓ‚Ó";
+			this->restart->UseVisualStyleBackColor = true;
+			this->restart->Click += gcnew System::EventHandler(this, &Game::restart_Click);
+			// 
 			// Game
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(763, 363);
+			this->Controls->Add(this->restart);
 			this->Controls->Add(this->answer);
 			this->Controls->Add(this->outputCity);
 			this->Controls->Add(this->userInput);
@@ -284,19 +297,22 @@ namespace Practise {
 	}
 
 	
-private: System::Void ‚˚ıÓ‰ToolStripMenuItem1_Click(System::Object^ sender, System::EventArgs^ e) {
-	Application::Exit();
-}
+	private: System::Void ‚˚ıÓ‰ToolStripMenuItem1_Click(System::Object^ sender, System::EventArgs^ e) {
+		Application::Exit();
+	}
 	   
 	private: System::Void Practise::Game::fromFileToData(String^ filePath, Dictionary<String^, List<String^>^>^ wordMap);
-//private: System::Void userInput_TextChanged(System::Object^ sender, System::EventArgs^ e);
-	 private:  System::Void Practise::Game::CompareWordsWithKey(String^ key, String^ inputString, Dictionary<String^, List<String^>^>^ dict);
-			private: System::Void labelPrint(String^ city);
-private: System::Void answer_Click(System::Object^ sender, System::EventArgs^ e);
-private: bool save_convertToInt64(String^ str);
-	 private: String^ findLastLetter(String^ user_city);
+	private:  System::Void Practise::Game::CompareWordsWithKey(String^ key, String^ inputString, Dictionary<String^, List<String^>^>^ dict);
+	private: System::Void labelPrint(String^ city);
+	private: System::Void answer_Click(System::Object^ sender, System::EventArgs^ e);
+	private: bool save_convertToInt64(String^ str);
+	private: String^ findLastLetter(String^ user_city);
 	private: bool digitsCheck(String^ string);
-
+	private: bool update_handler();
+	private: System::Void restarting();
+	private: System::Void restart_Click(System::Object^ sender, System::EventArgs^ e) {
+	restarting();
+}
 };
 
 

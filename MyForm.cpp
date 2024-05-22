@@ -470,4 +470,5 @@ System::Void Practise::MyForm::upload_button_Click(System::Object^ sender, Syste
     fileUploaded = true;
     resetData("example.txt");
     MessageBox::Show("Данные успешно загружены", "Успешно");
+
 }
