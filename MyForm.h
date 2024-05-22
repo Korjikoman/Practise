@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game.h";
+#include "Game.h"
 namespace Practise {
 
 	using namespace System;
@@ -723,12 +723,12 @@ private: System::Windows::Forms::Button^ button_sign_5;
 	private: System::Void dataGridView1_CellEndEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e);
 
 
-private: System::Void dataGridView1_CellBeginEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellCancelEventArgs^ e);
-private: System::Void îòäîõíóòüÎòÐàáîòûToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->Hide();
-	Game^ obj1 = gcnew Game();
-	obj1->ShowDialog();
-}
+	private: System::Void dataGridView1_CellBeginEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellCancelEventArgs^ e);
+	private: System::Void îòäîõíóòüÎòÐàáîòûToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Hide();
+		Game^ obj1 = gcnew Game();
+		obj1->ShowDialog();
+	}
 };
 	
 
