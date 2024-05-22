@@ -302,7 +302,7 @@ System::Void Practise::MyForm::UpdateMatchingRows()
 
             if (conditionArray[0]) {
                 String^ row_street = safe_cast<String^>(row->Cells[0]->Value);
-                if (String::Equals(row_street, tb_street)) {
+                if (String::Equals(row_street, tb_street) || row_street->StartsWith(tb_street)) {
                     matched++;
                 }
             }
