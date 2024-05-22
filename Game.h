@@ -15,6 +15,7 @@ namespace Practise {
 	public ref class Game : public System::Windows::Forms::Form
 	{
 	public:
+		//Form^ obj;
 		Game(void)
 		{
 			InitializeComponent();
@@ -22,6 +23,13 @@ namespace Practise {
 			//TODO: Add the constructor code here
 			//
 		}
+		/*Game(Form^ obj1)
+		{
+			obj = obj1;
+			InitializeComponent();
+
+		}*/
+		
 
 	protected:
 		/// <summary>
@@ -89,7 +97,13 @@ namespace Practise {
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::ToolStripMenuItem^ òåìàÑëîâToolStripMenuItem;
 	private: System::Windows::Forms::Label^ comments;
+	private: System::Windows::Forms::ToolStripMenuItem^ íà÷àòüToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ ãîğîäàToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ ïğîãğàììèğîâàíèåToolStripMenuItem;
 	private: System::ComponentModel::IContainer^ components;
+
+	// äîáàâëåííûå ìíîş ïåğåìåííûå
+	private: String^ filename;
 
 	private:
 		/// <summary>
@@ -119,6 +133,10 @@ namespace Practise {
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->âûõîäToolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->ïğàâèëàÈãğûToolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->òåìàÑëîâToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->ãîğîäàToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->ïğîãğàììèğîâàíèåToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->íà÷àòüToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
@@ -156,7 +174,6 @@ namespace Practise {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->letters = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->òåìàÑëîâToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->comments = (gcnew System::Windows::Forms::Label());
 			this->contextMenuStrip1->SuspendLayout();
 			this->contextMenuStrip3->SuspendLayout();
@@ -237,9 +254,9 @@ namespace Practise {
 			// 
 			// menuStrip1
 			// 
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
 				this->âûõîäToolStripMenuItem1,
-					this->ïğàâèëàÈãğûToolStripMenuItem1, this->òåìàÑëîâToolStripMenuItem
+					this->ïğàâèëàÈãğûToolStripMenuItem1, this->òåìàÑëîâToolStripMenuItem, this->íà÷àòüToolStripMenuItem
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
@@ -252,12 +269,44 @@ namespace Practise {
 			this->âûõîäToolStripMenuItem1->Name = L"âûõîäToolStripMenuItem1";
 			this->âûõîäToolStripMenuItem1->Size = System::Drawing::Size(100, 20);
 			this->âûõîäToolStripMenuItem1->Text = L"Âûéòè èç èãğû";
+			this->âûõîäToolStripMenuItem1->Click += gcnew System::EventHandler(this, &Game::âûõîäToolStripMenuItem1_Click);
 			// 
 			// ïğàâèëàÈãğûToolStripMenuItem1
 			// 
 			this->ïğàâèëàÈãğûToolStripMenuItem1->Name = L"ïğàâèëàÈãğûToolStripMenuItem1";
 			this->ïğàâèëàÈãğûToolStripMenuItem1->Size = System::Drawing::Size(98, 20);
 			this->ïğàâèëàÈãğûToolStripMenuItem1->Text = L"Ïğàâèëà èãğû";
+			// 
+			// òåìàÑëîâToolStripMenuItem
+			// 
+			this->òåìàÑëîâToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->ãîğîäàToolStripMenuItem,
+					this->ïğîãğàììèğîâàíèåToolStripMenuItem
+			});
+			this->òåìàÑëîâToolStripMenuItem->Name = L"òåìàÑëîâToolStripMenuItem";
+			this->òåìàÑëîâToolStripMenuItem->Size = System::Drawing::Size(90, 20);
+			this->òåìàÑëîâToolStripMenuItem->Text = L"Òåìà çàãàäêè";
+			// 
+			// ãîğîäàToolStripMenuItem
+			// 
+			this->ãîğîäàToolStripMenuItem->Name = L"ãîğîäàToolStripMenuItem";
+			this->ãîğîäàToolStripMenuItem->Size = System::Drawing::Size(186, 22);
+			this->ãîğîäàToolStripMenuItem->Text = L"Ãîğîäà";
+			this->ãîğîäàToolStripMenuItem->Click += gcnew System::EventHandler(this, &Game::ãîğîäàToolStripMenuItem_Click);
+			// 
+			// ïğîãğàììèğîâàíèåToolStripMenuItem
+			// 
+			this->ïğîãğàììèğîâàíèåToolStripMenuItem->Name = L"ïğîãğàììèğîâàíèåToolStripMenuItem";
+			this->ïğîãğàììèğîâàíèåToolStripMenuItem->Size = System::Drawing::Size(186, 22);
+			this->ïğîãğàììèğîâàíèåToolStripMenuItem->Text = L"Ïğîãğàììèğîâàíèå";
+			this->ïğîãğàììèğîâàíèåToolStripMenuItem->Click += gcnew System::EventHandler(this, &Game::ïğîãğàììèğîâàíèåToolStripMenuItem_Click);
+			// 
+			// íà÷àòüToolStripMenuItem
+			// 
+			this->íà÷àòüToolStripMenuItem->Name = L"íà÷àòüToolStripMenuItem";
+			this->íà÷àòüToolStripMenuItem->Size = System::Drawing::Size(58, 20);
+			this->íà÷àòüToolStripMenuItem->Text = L"Íà÷àòü";
+			this->íà÷àòüToolStripMenuItem->Click += gcnew System::EventHandler(this, &Game::íà÷àòüToolStripMenuItem_Click);
 			// 
 			// button1
 			// 
@@ -573,7 +622,7 @@ namespace Practise {
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label1->Location = System::Drawing::Point(12, 43);
+			this->label1->Location = System::Drawing::Point(179, 42);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(175, 20);
 			this->label1->TabIndex = 40;
@@ -586,7 +635,7 @@ namespace Practise {
 				static_cast<System::Int32>(static_cast<System::Byte>(128)));
 			this->letters->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->letters->Location = System::Drawing::Point(192, 39);
+			this->letters->Location = System::Drawing::Point(359, 38);
 			this->letters->Name = L"letters";
 			this->letters->Size = System::Drawing::Size(66, 24);
 			this->letters->TabIndex = 41;
@@ -597,26 +646,20 @@ namespace Practise {
 			this->label2->AutoSize = true;
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label2->Location = System::Drawing::Point(267, 43);
+			this->label2->Location = System::Drawing::Point(434, 42);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(46, 20);
 			this->label2->TabIndex = 42;
 			this->label2->Text = L"áóêâ";
 			// 
-			// òåìàÑëîâToolStripMenuItem
-			// 
-			this->òåìàÑëîâToolStripMenuItem->Name = L"òåìàÑëîâToolStripMenuItem";
-			this->òåìàÑëîâToolStripMenuItem->Size = System::Drawing::Size(90, 20);
-			this->òåìàÑëîâToolStripMenuItem->Text = L"Òåìà çàãàäêè";
-			// 
 			// comments
 			// 
 			this->comments->AutoSize = true;
-			this->comments->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->comments->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->comments->Location = System::Drawing::Point(412, 61);
+			this->comments->Location = System::Drawing::Point(509, 87);
 			this->comments->Name = L"comments";
-			this->comments->Size = System::Drawing::Size(66, 24);
+			this->comments->Size = System::Drawing::Size(57, 20);
 			this->comments->TabIndex = 43;
 			this->comments->Text = L"label3";
 			// 
@@ -680,5 +723,19 @@ namespace Practise {
 #pragma endregion
 	private: System::Void Game_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
+
+	private: System::Void íà÷àòüToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void ãîğîäàToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+		filename = "countries.txt";
+	}
+	private: System::Void ïğîãğàììèğîâàíèåToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+		filename = "prog.txt";
+	}
+
+	private: void processRandomStringFromFile(System::String^ filePath);
+private: System::Void âûõîäToolStripMenuItem1_Click(System::Object^ sender, System::EventArgs^ e) {
+	/*this->Hide();
+	obj->Show();*/
+}
 };
 }
