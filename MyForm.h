@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Game.h";
 namespace Practise {
 
 	using namespace System;
@@ -325,6 +326,7 @@ private: System::Windows::Forms::Button^ button_sign_5;
 			this->îòäîõíóòüÎòÐàáîòûToolStripMenuItem->Name = L"îòäîõíóòüÎòÐàáîòûToolStripMenuItem";
 			this->îòäîõíóòüÎòÐàáîòûToolStripMenuItem->Size = System::Drawing::Size(216, 22);
 			this->îòäîõíóòüÎòÐàáîòûToolStripMenuItem->Text = L"Îòäîõíóòü îò ðàáîòû";
+			this->îòäîõíóòüÎòÐàáîòûToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::îòäîõíóòüÎòÐàáîòûToolStripMenuItem_Click);
 			// 
 			// îÏðîãðàììåToolStripMenuItem
 			// 
@@ -722,6 +724,11 @@ private: System::Windows::Forms::Button^ button_sign_5;
 
 
 private: System::Void dataGridView1_CellBeginEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellCancelEventArgs^ e);
+private: System::Void îòäîõíóòüÎòÐàáîòûToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	this->Hide();
+	Game^ obj1 = gcnew Game();
+	obj1->ShowDialog();
+}
 };
 	
 
