@@ -308,34 +308,57 @@ System::Void Practise::MyForm::UpdateMatchingRows()
             }
             if (conditionArray[1]) {
                 String^ cellValue = row->Cells[1]->Value->ToString();
-                Int64 row_home_number = System::Convert::ToInt64(cellValue);
-                if (signCondition(tb_home_num, row_home_number, sign1)) matched++;
+                if (cellValue != "") {
+                    Int64 row_home_number = System::Convert::ToInt64(cellValue);
+                    if (signCondition(tb_home_num, row_home_number, sign1)) matched++;
+                }
+                
             }
             if (conditionArray[2]) {
                 String^ cellValue = row->Cells[2]->Value->ToString();
-                Int64 row_year = System::Convert::ToInt64(cellValue);
-                if (signCondition(tb_year, row_year, sign2)) matched++;
+                if (cellValue != "") 
+                {
+                    Int64 row_year = System::Convert::ToInt64(cellValue);
+                    if (signCondition(tb_year, row_year, sign2)) matched++;
+                }
+                
             }
             if (conditionArray[3]) {
                 String^ cellValue = row->Cells[3]->Value->ToString();
-                Int64 row_square = System::Convert::ToInt64(cellValue);
-                if (signCondition(tb_square, row_square, sign3)) matched++;
+                if (cellValue != "") 
+                {
+                    Int64 row_square = System::Convert::ToInt64(cellValue);
+                    if (signCondition(tb_square, row_square, sign3)) matched++;
+                }
+                
             }
             if (conditionArray[4]) {
                 String^ cellValue = row->Cells[6]->Value->ToString();
-                Int64 row_humans = System::Convert::ToInt64(cellValue);
-                if (signCondition(tb_humans, row_humans, sign4)) matched++;
+                if (cellValue != "") 
+                {
+                    Int64 row_humans = System::Convert::ToInt64(cellValue);
+                    if (signCondition(tb_humans, row_humans, sign4)) matched++;
+                }
+                
             }
             
             if (conditionArray[5]) {
                 String^ cellValue = row->Cells[4]->Value->ToString();
-                Int64 row_floors = System::Convert::ToInt64(cellValue);
-                if (signCondition(tb_floors, row_floors, sign5)) matched++;
+                if (cellValue != "") 
+                {
+                    Int64 row_floors = System::Convert::ToInt64(cellValue);
+                    if (signCondition(tb_floors, row_floors, sign5)) matched++;
+                }
+                
             }
             if (conditionArray[6]) {
                 String^ cellValue = row->Cells[5]->Value->ToString();
-                Int64 row_flats = System::Convert::ToInt64(cellValue);
-                if (signCondition(tb_flats, row_flats, sign6)) matched++;
+                if (cellValue != "") 
+                {
+                    Int64 row_flats = System::Convert::ToInt64(cellValue);
+                    if (signCondition(tb_flats, row_flats, sign6)) matched++;
+                }
+                
             }
 
             // если наша строка соответствует всем условиям, то добавляем ее в массив
