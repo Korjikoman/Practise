@@ -56,12 +56,12 @@ System::Void Practise::MyForm::add_button_Click(System::Object^ sender, System::
 // Функция для удаления 
 System::Void Practise::MyForm::del_button_Click(System::Object^ sender, System::EventArgs^ e)
 {
-    int i, j , flag = 1;
+    int flag = 1;
     for each (DataGridViewCell ^ cell in dataGridView1->SelectedCells)
     {
         int rowIndex = cell->RowIndex;
         int columnIndex = cell->ColumnIndex;
-        dataGridView1->Rows[rowIndex]->Cells[columnIndex]->Value = nullptr;
+        dataGridView1->Rows[rowIndex]->Cells[columnIndex]->Value = "";
         flag = 0;
     }
     if (dataGridView1->SelectedRows->Count > 0 || dataGridView1->SelectedColumns->Count > 0) {
@@ -201,7 +201,7 @@ System::Void Practise::MyForm::button_sign_changevalue(System::Object^ sender)
 
     // Приведение sender к Button, чтобы получить нажатую кнопку
     Button^ button = dynamic_cast<Button^>(sender);
-    if (button == nullptr)
+    if (!button)
         return;
 
     int clickCount = buttonClickCounts[button];

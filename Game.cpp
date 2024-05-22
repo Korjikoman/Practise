@@ -1,10 +1,6 @@
 #include "Game.h"
 #include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <random>
-#include <cctype>
+
 
 
 using namespace System;
@@ -57,7 +53,7 @@ System::Void Practise::Game::fromFileToData(String^ filePath, Dictionary<String^
 // функция, выводящая следующий город
 System::Void Practise::Game::CompareWordsWithKey( String^ key,  String^ inputString, Dictionary<String^, List<String^>^>^ dict)
 {
-    bool pass;
+    bool pass = false;
     // Проверяем, есть ли ключ в словаре
     if (!dict->ContainsKey(key))
     {
@@ -73,6 +69,7 @@ System::Void Practise::Game::CompareWordsWithKey( String^ key,  String^ inputStr
             if (!String::Equals(inputString, city, StringComparison::OrdinalIgnoreCase)) {
 
                 labelPrint(city);
+                last_city = city;
                 usedWords[key]->Add(city);
                 countElems--;
                 if (update_handler()) {
@@ -87,6 +84,8 @@ System::Void Practise::Game::CompareWordsWithKey( String^ key,  String^ inputStr
             if (!String::Equals(inputString, city, StringComparison::OrdinalIgnoreCase) && (!usedWords[key]->Contains(city))) {
 
                 labelPrint(city);
+                last_city = city;
+
                 usedWords[key]->Add(city);
                 countElems--;
                 if (update_handler()) {
@@ -111,7 +110,13 @@ System::Void Practise::Game::answer_Click(System::Object^ sender, System::EventA
  {
     String^ user_city = userInput->Text;
     String^ key = findLastLetter(user_city);
-
+    if (last_city != "") {
+        if (cityCheck(user_city, last_city) == false) 
+        {
+            MessageBox::Show("Первая буква не совпадает с последней!", "Error");
+            return;
+        }
+    }
     if (!String::IsNullOrWhiteSpace(user_city) && digitsCheck(user_city)) {
         if (save_convertToInt64(key)) { MessageBox::Show("Слова с цифры не начинаются!", "Не жульничать!"); return; }
         CompareWordsWithKey(key, user_city, wordMap);
@@ -135,10 +140,7 @@ bool Practise::Game::save_convertToInt64(String^ str)
 
 String^ Practise::Game::findLastLetter(String^ user_city)
 {
-    String^ last_letter = user_city->Substring(user_city->Length - 1); // Получение последнего символа
-    /*if (isdigit(last_letter[0])) {
-        MessageBox::Show("Слова не оканчиваются цифрами!", "Ты чего!");
-    }*/
+    String^ last_letter = user_city->Substring(user_city->Length - 1); 
 
     return last_letter;
 }
@@ -180,7 +182,22 @@ System::Void Practise::Game::restarting()
     wordMap->Clear();
     usedWords->Clear();
     countElems = 0;
-    outputCity->Visible = false;
+    
 
+}
+
+bool Practise::Game::cityCheck(String^ city_user, String^ city_comp)
+{
+    if (city_user->Length == 0 || city_comp->Length == 0) {
+        return false;
+    }
+    
+    wchar_t firstLetterUser = std::tolower(city_user[0]);;
+    wchar_t lastLetterComp = city_comp[city_comp->Length - 1]; 
+    if (lastLetterComp == L'ы' || lastLetterComp == L'ь' || lastLetterComp == L'ъ') {
+        lastLetterComp = city_comp[city_comp->Length - 2];
+    }
+   
+    return (firstLetterUser == lastLetterComp);
 }
 

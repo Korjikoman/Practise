@@ -81,7 +81,7 @@ namespace Practise {
 	private: Dictionary<String^, List<String^>^>^ usedWords = gcnew Dictionary<String^, List<String^>^>();
 	private: System::Windows::Forms::Button^ restart;
 	private: int countElems = 0;
-
+	private: String^ last_city = "";
 
 	private:
 		/// <summary>
@@ -313,6 +313,7 @@ namespace Practise {
 	private: System::Void restart_Click(System::Object^ sender, System::EventArgs^ e) {
 	restarting();
 }
+	private: bool cityCheck(String^ city_user, String^ city_comp);
 };
 
 
