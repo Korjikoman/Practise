@@ -379,10 +379,6 @@ System::Void Practise::MyForm::UpdateMatchingRows()
                 dataGridView1->Rows->Add(row);
             }
         }
-        else
-        {
-            MessageBox::Show("Нет строк с указанным названием улицы", "Информация");
-        }
 
     }
     
