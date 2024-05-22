@@ -170,7 +170,7 @@ System::Void Practise::MyForm::TextChanged(System::Object^ sender, System::Event
 {
     if (fileUploaded)
     {
-        resetData("example.txt");
+        //resetData("example.txt");
         UpdateMatchingRows();
     }
     else {
