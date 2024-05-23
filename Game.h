@@ -245,6 +245,7 @@ namespace Practise {
 			this->outputCity->Size = System::Drawing::Size(35, 13);
 			this->outputCity->TabIndex = 41;
 			this->outputCity->Text = L"label1";
+			this->outputCity->Visible = false;
 			// 
 			// answer
 			// 
@@ -293,7 +294,7 @@ namespace Practise {
 #pragma endregion
 	private: System::Void Game_Load(System::Object^ sender, System::EventArgs^ e) {
 		fromFileToData(filePath, wordMap);
-
+			
 	}
 
 	

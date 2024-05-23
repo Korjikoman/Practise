@@ -1,6 +1,6 @@
 #include "Game.h"
 #include <iostream>
-
+#include <cwctype>
 
 
 using namespace System;
@@ -103,6 +103,7 @@ System::Void Practise::Game::CompareWordsWithKey( String^ key,  String^ inputStr
 
 System::Void Practise::Game::labelPrint(String^ city)
 {
+    outputCity->Visible = true;
     outputCity->Text = "Мой город: " + city +"\n А какой твой?";
 }
 
@@ -181,18 +182,20 @@ System::Void Practise::Game::restarting()
 {
     wordMap->Clear();
     usedWords->Clear();
+    outputCity->Visible = false;
     countElems = 0;
-    
+    fromFileToData(filePath, wordMap);
 
 }
 
 bool Practise::Game::cityCheck(String^ city_user, String^ city_comp)
 {
+    std::setlocale(LC_ALL, "ru_RU.UTF-8");
     if (city_user->Length == 0 || city_comp->Length == 0) {
         return false;
     }
     
-    wchar_t firstLetterUser = std::tolower(city_user[0]);;
+    wchar_t firstLetterUser = std::towlower(city_user[0]);
     wchar_t lastLetterComp = city_comp[city_comp->Length - 1]; 
     if (lastLetterComp == L'ы' || lastLetterComp == L'ь' || lastLetterComp == L'ъ') {
         lastLetterComp = city_comp[city_comp->Length - 2];

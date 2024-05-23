@@ -45,10 +45,10 @@ namespace Practise {
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
 	private: System::Windows::Forms::MenuStrip^ menuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^ äåéñòâèÿToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ çàãðóçèòüToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ äîáàâèòüToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ îáíîâèòüToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ óäàëèòüToolStripMenuItem;
+
+
+
+
 	private: System::Windows::Forms::ToolStripMenuItem^ îÏðîãðàììåToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ âûõîäToolStripMenuItem;
 	private: System::Windows::Forms::GroupBox^ groupBox1;
@@ -183,10 +183,6 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			this->humanz = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->äåéñòâèÿToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->çàãðóçèòüToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->äîáàâèòüToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->îáíîâèòüToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->óäàëèòüToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->îòäîõíóòüÎòÐàáîòûToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->îÏðîãðàììåToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->âûõîäToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -292,41 +288,10 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			// 
 			// äåéñòâèÿToolStripMenuItem
 			// 
-			this->äåéñòâèÿToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
-				this->çàãðóçèòüToolStripMenuItem,
-					this->äîáàâèòüToolStripMenuItem, this->îáíîâèòüToolStripMenuItem, this->óäàëèòüToolStripMenuItem, this->îòäîõíóòüÎòÐàáîòûToolStripMenuItem
-			});
+			this->äåéñòâèÿToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->îòäîõíóòüÎòÐàáîòûToolStripMenuItem });
 			this->äåéñòâèÿToolStripMenuItem->Name = L"äåéñòâèÿToolStripMenuItem";
 			this->äåéñòâèÿToolStripMenuItem->Size = System::Drawing::Size(70, 20);
 			this->äåéñòâèÿToolStripMenuItem->Text = L"Äåéñòâèÿ";
-			// 
-			// çàãðóçèòüToolStripMenuItem
-			// 
-			this->çàãðóçèòüToolStripMenuItem->Name = L"çàãðóçèòüToolStripMenuItem";
-			this->çàãðóçèòüToolStripMenuItem->Size = System::Drawing::Size(216, 22);
-			this->çàãðóçèòüToolStripMenuItem->Text = L"Çàãðóçèòü";
-			this->çàãðóçèòüToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::upload_button_Click);
-			// 
-			// äîáàâèòüToolStripMenuItem
-			// 
-			this->äîáàâèòüToolStripMenuItem->Name = L"äîáàâèòüToolStripMenuItem";
-			this->äîáàâèòüToolStripMenuItem->Size = System::Drawing::Size(216, 22);
-			this->äîáàâèòüToolStripMenuItem->Text = L"Äîáàâèòü";
-			this->äîáàâèòüToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::add_button_Click);
-			// 
-			// îáíîâèòüToolStripMenuItem
-			// 
-			this->îáíîâèòüToolStripMenuItem->Name = L"îáíîâèòüToolStripMenuItem";
-			this->îáíîâèòüToolStripMenuItem->Size = System::Drawing::Size(216, 22);
-			this->îáíîâèòüToolStripMenuItem->Text = L"Ñáðîñèòü";
-			this->îáíîâèòüToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::button_udate_1_Click);
-			// 
-			// óäàëèòüToolStripMenuItem
-			// 
-			this->óäàëèòüToolStripMenuItem->Name = L"óäàëèòüToolStripMenuItem";
-			this->óäàëèòüToolStripMenuItem->Size = System::Drawing::Size(216, 22);
-			this->óäàëèòüToolStripMenuItem->Text = L"Óäàëèòü";
-			this->óäàëèòüToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::del_button_Click);
 			// 
 			// îòäîõíóòüÎòÐàáîòûToolStripMenuItem
 			// 
@@ -391,7 +356,7 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			// 
 			// upload_button
 			// 
-			this->upload_button->Location = System::Drawing::Point(24, 170);
+			this->upload_button->Location = System::Drawing::Point(24, 167);
 			this->upload_button->Name = L"upload_button";
 			this->upload_button->Size = System::Drawing::Size(204, 51);
 			this->upload_button->TabIndex = 2;
