@@ -77,7 +77,6 @@ namespace Practise {
 
 
 
-
 	private: System::ComponentModel::IContainer^ components;
 
 	// добавленные мною переменные
@@ -105,6 +104,7 @@ namespace Practise {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			
 			this->components = (gcnew System::ComponentModel::Container());
 			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->выходToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -231,8 +231,11 @@ namespace Practise {
 			// secret_word
 			// 
 			this->secret_word->AutoSize = true;
+			this->secret_word->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(255)), static_cast<System::Int32>(static_cast<System::Byte>(128)),
+				static_cast<System::Int32>(static_cast<System::Byte>(255)));
 			this->secret_word->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 21.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
+			this->secret_word->ForeColor = System::Drawing::Color::Cornsilk;
 			this->secret_word->Location = System::Drawing::Point(210, 55);
 			this->secret_word->Name = L"secret_word";
 			this->secret_word->Size = System::Drawing::Size(217, 33);
@@ -242,39 +245,47 @@ namespace Practise {
 			// 
 			// userInput
 			// 
-			this->userInput->Location = System::Drawing::Point(86, 166);
+			this->userInput->Location = System::Drawing::Point(81, 166);
 			this->userInput->Name = L"userInput";
-			this->userInput->Size = System::Drawing::Size(270, 20);
+			this->userInput->Size = System::Drawing::Size(283, 20);
 			this->userInput->TabIndex = 40;
 			// 
 			// outputCity
 			// 
 			this->outputCity->AutoSize = true;
-			this->outputCity->Location = System::Drawing::Point(216, 249);
+			this->outputCity->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->outputCity->Location = System::Drawing::Point(212, 238);
 			this->outputCity->Name = L"outputCity";
-			this->outputCity->Size = System::Drawing::Size(35, 13);
+			this->outputCity->Size = System::Drawing::Size(59, 22);
 			this->outputCity->TabIndex = 41;
 			this->outputCity->Text = L"label1";
 			this->outputCity->Visible = false;
 			// 
 			// answer
 			// 
-			this->answer->Location = System::Drawing::Point(385, 162);
+			this->answer->BackColor = System::Drawing::Color::IndianRed;
+			this->answer->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->answer->Location = System::Drawing::Point(382, 166);
 			this->answer->Name = L"answer";
 			this->answer->Size = System::Drawing::Size(75, 23);
 			this->answer->TabIndex = 42;
 			this->answer->Text = L"ответить";
-			this->answer->UseVisualStyleBackColor = true;
+			this->answer->UseVisualStyleBackColor = false;
 			this->answer->Click += gcnew System::EventHandler(this, &Game::answer_Click);
 			// 
 			// restart
 			// 
+			this->restart->BackColor = System::Drawing::Color::IndianRed;
+			this->restart->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->restart->Location = System::Drawing::Point(628, 312);
 			this->restart->Name = L"restart";
 			this->restart->Size = System::Drawing::Size(94, 23);
 			this->restart->TabIndex = 43;
 			this->restart->Text = L"начать заново";
-			this->restart->UseVisualStyleBackColor = true;
+			this->restart->UseVisualStyleBackColor = false;
 			this->restart->Click += gcnew System::EventHandler(this, &Game::restart_Click);
 			// 
 			// Game
@@ -307,7 +318,7 @@ namespace Practise {
 			
 	}
 
-	
+		   
 	private: System::Void выходToolStripMenuItem1_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Hide();
 		obj->Show();
