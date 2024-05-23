@@ -119,7 +119,7 @@ System::Void Practise::Game::answer_Click(System::Object^ sender, System::EventA
         }
     }
     if (!String::IsNullOrWhiteSpace(user_city) && digitsCheck(user_city)) {
-        if (save_convertToInt64(key)) { MessageBox::Show("Слова с цифры не начинаются!", "Не жульничать!"); return; }
+        if (save_convertToInt64(key)) { MessageBox::Show("В слове есть цифра!", "Не жульничать!"); return; }
         CompareWordsWithKey(key, user_city, wordMap);
     }
     
@@ -190,17 +190,20 @@ System::Void Practise::Game::restarting()
 
 bool Practise::Game::cityCheck(String^ city_user, String^ city_comp)
 {
-    std::setlocale(LC_ALL, "ru_RU.UTF-8");
-    if (city_user->Length == 0 || city_comp->Length == 0) {
-        return false;
+    if (outputCity->Visible) {
+        std::setlocale(LC_ALL, "ru_RU.UTF-8");
+        if (city_user->Length == 0 || city_comp->Length == 0) {
+            return false;
+        }
+
+        wchar_t firstLetterUser = std::towlower(city_user[0]);
+        wchar_t lastLetterComp = city_comp[city_comp->Length - 1];
+        if (lastLetterComp == L'ы' || lastLetterComp == L'ь' || lastLetterComp == L'ъ') {
+            lastLetterComp = city_comp[city_comp->Length - 2];
+        }
+
+        return (firstLetterUser == lastLetterComp);
     }
-    
-    wchar_t firstLetterUser = std::towlower(city_user[0]);
-    wchar_t lastLetterComp = city_comp[city_comp->Length - 1]; 
-    if (lastLetterComp == L'ы' || lastLetterComp == L'ь' || lastLetterComp == L'ъ') {
-        lastLetterComp = city_comp[city_comp->Length - 2];
-    }
-   
-    return (firstLetterUser == lastLetterComp);
+    return true;
 }
 
