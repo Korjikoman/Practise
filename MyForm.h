@@ -730,11 +730,13 @@ private: System::Windows::Forms::Button^ uply;
 
 
 	private: System::Void dataGridView1_CellBeginEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellCancelEventArgs^ e);
-	private: System::Void îòäîõíóòüÎòÐàáîòûToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	
+private: System::Void îòäîõíóòüÎòÐàáîòûToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 		this->Hide();
-		Game^ obj1 = gcnew Game();
+		Game^ obj1 = gcnew Game(this);
 		obj1->ShowDialog();
 	}
+
 private: System::Void admin_mode_button_Click(System::Object^ sender, System::EventArgs^ e) {
 	String^ filePath = "password.txt";
 

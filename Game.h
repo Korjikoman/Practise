@@ -15,7 +15,7 @@ namespace Practise {
 	public ref class Game : public System::Windows::Forms::Form
 	{
 	public:
-		
+		Form^ obj;
 		Game(void)
 		{
 			InitializeComponent();
@@ -24,7 +24,16 @@ namespace Practise {
 			//
 
 		}
-		
+		Game(Form^ obj1)
+		{
+			obj = obj1;
+			InitializeComponent();
+			
+			//
+			//TODO: Add the constructor code here
+			//
+
+		}
 
 	protected:
 		/// <summary>
@@ -217,6 +226,7 @@ namespace Practise {
 			this->правила»грыToolStripMenuItem1->Name = L"правила»грыToolStripMenuItem1";
 			this->правила»грыToolStripMenuItem1->Size = System::Drawing::Size(98, 20);
 			this->правила»грыToolStripMenuItem1->Text = L"ѕравила игры";
+			this->правила»грыToolStripMenuItem1->Click += gcnew System::EventHandler(this, &Game::правила»грыToolStripMenuItem1_Click);
 			// 
 			// secret_word
 			// 
@@ -299,7 +309,8 @@ namespace Practise {
 
 	
 	private: System::Void выходToolStripMenuItem1_Click(System::Object^ sender, System::EventArgs^ e) {
-		Application::Exit();
+		this->Hide();
+		obj->Show();
 	}
 	   
 	private: System::Void Practise::Game::fromFileToData(String^ filePath, Dictionary<String^, List<String^>^>^ wordMap);
@@ -315,6 +326,9 @@ namespace Practise {
 	restarting();
 }
 	private: bool cityCheck(String^ city_user, String^ city_comp);
+private: System::Void правила»грыToolStripMenuItem1_Click(System::Object^ sender, System::EventArgs^ e) {
+	MessageBox::Show("ѕравила игры в √орода.\n¬ы вводите город, программа предлагает свой, вы вводите новый город, перва€ буква которого совпадает с  последней буквой названного программой города");
+}
 };
 
 
