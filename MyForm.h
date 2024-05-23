@@ -736,6 +736,20 @@ private: System::Windows::Forms::Button^ uply;
 		obj1->ShowDialog();
 	}
 private: System::Void admin_mode_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	String^ filePath = "password.txt";
+
+	// Читаем пароль из файла
+	String^ password;
+	try {
+		password = File::ReadAllText(filePath);
+	}
+	catch (Exception^ ex) {
+		MessageBox::Show("Ошибка открытия файла с паролем: " + ex->Message);
+		return;
+	}
+
+	// Убираем возможные пробелы и символы новой строки из пароля
+	password = password->Trim();
 
 	if (this->admin_textbox->Text == "123") {
 		this->del_button->Visible = true;
@@ -743,6 +757,9 @@ private: System::Void admin_mode_button_Click(System::Object^ sender, System::Ev
 		this->admin_mode_button->Visible = false;
 		this->adm_label->Visible = false;
 		this->admin_textbox->Visible = false;
+	}
+	else {
+		MessageBox::Show("Некорректный пароль");
 	}
 }
 private: System::Void uply_Click(System::Object^ sender, System::EventArgs^ e) {
