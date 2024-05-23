@@ -55,6 +55,7 @@ System::Void Practise::Game::CompareWordsWithKey( String^ key,  String^ inputStr
 {
     bool pass = false;
     // Проверяем, есть ли ключ в словаре
+   
     if (!dict->ContainsKey(key))
     {
         Console::WriteLine("Ключ '{key}' отсутствует в словаре.");
@@ -141,8 +142,15 @@ bool Practise::Game::save_convertToInt64(String^ str)
 
 String^ Practise::Game::findLastLetter(String^ user_city)
 {
-    String^ last_letter = user_city->Substring(user_city->Length - 1); 
+    String^ last_letter = "";
+    if (firsttime) {
+        last_letter = user_city->Substring(0,1 )->ToLower();
 
+    }
+    else {
+        last_letter = user_city->Substring(user_city->Length - 1);
+
+    }
     return last_letter;
 }
 

@@ -76,7 +76,7 @@ namespace Practise {
 
 
 
-
+	private: bool firsttime = true;
 	private: System::ComponentModel::IContainer^ components;
 
 	// добавленные мною переменные
