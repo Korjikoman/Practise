@@ -166,17 +166,19 @@ System::Void Practise::MyForm::resetData(String^ filename)
 
 
 // Данная функция регистрирует изменения в текстбоксах
-System::Void Practise::MyForm::TextChanged(System::Object^ sender, System::EventArgs^ e)
-{
-    if (fileUploaded)
-    {
-        //resetData("example.txt");
-        UpdateMatchingRows();
-    }
-    else {
-        MessageBox::Show("Сначала нужно загрузить файл", "Ошибка");
-    }
-}
+//System::Void Practise::MyForm::TextChanged(System::Object^ sender, System::EventArgs^ e)
+//{
+//    if (fileUploaded)
+//    {
+//        //resetData("example.txt");
+//        if (upplied)
+//            UpdateMatchingRows();
+//        else return;
+//    }
+//    else {
+//        MessageBox::Show("Сначала нужно загрузить файл", "Ошибка");
+//    }
+//}
 
 
 bool Practise::MyForm::NumbersAction(String^ sign, Int64 number, Int64 current_num)
@@ -217,6 +219,12 @@ System::Void Practise::MyForm::button_sign_changevalue(System::Object^ sender)
 // общая функция для ЗАПРОСОВ
 System::Void Practise::MyForm::UpdateMatchingRows()
 {
+    if (!fileUploaded) {
+
+        MessageBox::Show("Загрузите файл", "Ошибка");
+        upplied = false;
+        return;
+    }
     int matched = 0;
     int conditions = 0;
     List<DataGridViewRow^>^ matchingRows = gcnew List<DataGridViewRow^>();

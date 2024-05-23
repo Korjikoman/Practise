@@ -61,7 +61,7 @@ namespace Practise {
 		BindingList<DataGridViewRow^>^ originalRows;
 
 
-
+	private: bool upplied = false;
 	private:
 		bool isCellValueChanged = false;
 	private: bool fileUploaded = false;
@@ -124,6 +124,7 @@ private: System::Windows::Forms::Label^ adm_label;
 private: System::Windows::Forms::TextBox^ admin_textbox;
 
 private: System::Windows::Forms::Button^ admin_mode_button;
+private: System::Windows::Forms::Button^ uply;
 
 
 
@@ -215,6 +216,7 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			this->adm_label = (gcnew System::Windows::Forms::Label());
 			this->admin_textbox = (gcnew System::Windows::Forms::TextBox());
 			this->admin_mode_button = (gcnew System::Windows::Forms::Button());
+			this->uply = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
@@ -399,7 +401,6 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			this->street->Name = L"street";
 			this->street->Size = System::Drawing::Size(289, 20);
 			this->street->TabIndex = 4;
-			this->street->TextChanged += gcnew System::EventHandler(this, &MyForm::TextChanged);
 			// 
 			// homeNum
 			// 
@@ -407,7 +408,6 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			this->homeNum->Name = L"homeNum";
 			this->homeNum->Size = System::Drawing::Size(131, 20);
 			this->homeNum->TabIndex = 6;
-			this->homeNum->TextChanged += gcnew System::EventHandler(this, &MyForm::TextChanged);
 			// 
 			// label2
 			// 
@@ -423,7 +423,6 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			this->yearOfOpenning->Name = L"yearOfOpenning";
 			this->yearOfOpenning->Size = System::Drawing::Size(131, 20);
 			this->yearOfOpenning->TabIndex = 8;
-			this->yearOfOpenning->TextChanged += gcnew System::EventHandler(this, &MyForm::TextChanged);
 			// 
 			// label3
 			// 
@@ -439,7 +438,6 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			this->Square->Name = L"Square";
 			this->Square->Size = System::Drawing::Size(131, 20);
 			this->Square->TabIndex = 10;
-			this->Square->TextChanged += gcnew System::EventHandler(this, &MyForm::TextChanged);
 			// 
 			// label4
 			// 
@@ -455,7 +453,6 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			this->floorsCount->Name = L"floorsCount";
 			this->floorsCount->Size = System::Drawing::Size(131, 20);
 			this->floorsCount->TabIndex = 12;
-			this->floorsCount->TextChanged += gcnew System::EventHandler(this, &MyForm::TextChanged);
 			// 
 			// label5
 			// 
@@ -471,7 +468,6 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			this->flatsCount->Name = L"flatsCount";
 			this->flatsCount->Size = System::Drawing::Size(131, 20);
 			this->flatsCount->TabIndex = 14;
-			this->flatsCount->TextChanged += gcnew System::EventHandler(this, &MyForm::TextChanged);
 			// 
 			// label6
 			// 
@@ -495,7 +491,6 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			this->humansCount->Name = L"humansCount";
 			this->humansCount->Size = System::Drawing::Size(131, 20);
 			this->humansCount->TabIndex = 16;
-			this->humansCount->TextChanged += gcnew System::EventHandler(this, &MyForm::TextChanged);
 			// 
 			// button_sign
 			// 
@@ -583,12 +578,23 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 			this->admin_mode_button->UseVisualStyleBackColor = true;
 			this->admin_mode_button->Click += gcnew System::EventHandler(this, &MyForm::admin_mode_button_Click);
 			// 
+			// uply
+			// 
+			this->uply->Location = System::Drawing::Point(865, 450);
+			this->uply->Name = L"uply";
+			this->uply->Size = System::Drawing::Size(105, 37);
+			this->uply->TabIndex = 51;
+			this->uply->Text = L"применить";
+			this->uply->UseVisualStyleBackColor = true;
+			this->uply->Click += gcnew System::EventHandler(this, &MyForm::uply_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::White;
 			this->ClientSize = System::Drawing::Size(1006, 609);
+			this->Controls->Add(this->uply);
 			this->Controls->Add(this->admin_mode_button);
 			this->Controls->Add(this->admin_textbox);
 			this->Controls->Add(this->adm_label);
@@ -640,7 +646,7 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 
 	private: System::Void saveData_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void resetData( String^ filename);
-	private: System::Void TextChanged(System::Object^ sender, System::EventArgs^ e);
+	//private: System::Void TextChanged(System::Object^ sender, System::EventArgs^ e);
 	private: bool NumbersAction(String^ sign, Int64 number, Int64 current_num);
 	
 	private: System::Void button_sign_changevalue(System::Object^ sender);
@@ -649,15 +655,9 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 
 	private: System::Void button_sign_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		if (fileUploaded)
-		{
+		
 			button_sign_changevalue(sender);
-			resetData("example.txt");
-			UpdateMatchingRows();
-		}
-		else {
-			MessageBox::Show("Сначала нужно загрузить файл", "Ошибка");
-		}
+		
 	}
 
 	private: System::Void button_sign_1_Click(System::Object^ sender, System::EventArgs^ e)
@@ -713,6 +713,7 @@ private: System::Windows::Forms::Button^ admin_mode_button;
 		button_sign_4->Text = ">";
 		button_sign_5->Text = ">";
 
+		upplied = false;
 		// перезагружаем данные из файлика
 		resetData("example.txt");
 	}
@@ -743,6 +744,11 @@ private: System::Void admin_mode_button_Click(System::Object^ sender, System::Ev
 		this->adm_label->Visible = false;
 		this->admin_textbox->Visible = false;
 	}
+}
+private: System::Void uply_Click(System::Object^ sender, System::EventArgs^ e) {
+	upplied = true;
+	UpdateMatchingRows();
+
 }
 };
 	
