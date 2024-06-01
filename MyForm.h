@@ -47,8 +47,6 @@ namespace Practise {
 	private: System::Windows::Forms::ToolStripMenuItem^ äåéñòâèÿToolStripMenuItem;
 
 
-
-
 	private: System::Windows::Forms::ToolStripMenuItem^ îÏğîãğàììåToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ âûõîäToolStripMenuItem;
 	private: System::Windows::Forms::GroupBox^ groupBox1;
@@ -126,38 +124,7 @@ private: System::Windows::Forms::TextBox^ admin_textbox;
 private: System::Windows::Forms::Button^ admin_mode_button;
 private: System::Windows::Forms::Button^ uply;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	protected:
-
-
-
-
-
-
-
-
 
 	protected:
 
@@ -770,6 +737,4 @@ private: System::Void uply_Click(System::Object^ sender, System::EventArgs^ e) {
 
 }
 };
-	
-
 }

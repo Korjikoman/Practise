@@ -63,18 +63,11 @@ namespace Practise {
 	private: System::Windows::Forms::ToolStripMenuItem^ выходToolStripMenuItem1;
 	private: System::Windows::Forms::ToolStripMenuItem^ правилаИгрыToolStripMenuItem1;
 
-
-
 	private:Dictionary<String^, List<String^>^>^ wordMap = gcnew Dictionary<String^, List<String^>^>();
 	private: String^ filePath = "cities.txt";
 
 
 	private: System::Windows::Forms::Label^ secret_word;
-
-
-
-
-
 
 	private: bool firsttime = true;
 	private: System::ComponentModel::IContainer^ components;
@@ -90,7 +83,7 @@ namespace Practise {
 	private: System::Windows::Forms::Button^ restart;
 	private: int countElems = 0;
 	private: String^ last_city = "";
-
+	private: bool unknownCity;
 	private:
 		/// <summary>
 		/// Required designer variable.
@@ -104,7 +97,6 @@ namespace Practise {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			
 			this->components = (gcnew System::ComponentModel::Container());
 			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->выходToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -280,9 +272,9 @@ namespace Practise {
 			this->restart->BackColor = System::Drawing::Color::IndianRed;
 			this->restart->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->restart->Location = System::Drawing::Point(628, 312);
+			this->restart->Location = System::Drawing::Point(559, 318);
 			this->restart->Name = L"restart";
-			this->restart->Size = System::Drawing::Size(94, 23);
+			this->restart->Size = System::Drawing::Size(122, 23);
 			this->restart->TabIndex = 43;
 			this->restart->Text = L"начать заново";
 			this->restart->UseVisualStyleBackColor = false;
@@ -325,11 +317,12 @@ namespace Practise {
 	}
 	   
 	private: System::Void Practise::Game::fromFileToData(String^ filePath, Dictionary<String^, List<String^>^>^ wordMap);
-	private:  System::Void Practise::Game::CompareWordsWithKey(String^ key, String^ inputString, Dictionary<String^, List<String^>^>^ dict);
+	private:  System::Void Practise::Game::CompareWordsWithKey(String^ key, String^ key_1, String^ inputString, Dictionary<String^, List<String^>^>^ dict);
 	private: System::Void labelPrint(String^ city);
 	private: System::Void answer_Click(System::Object^ sender, System::EventArgs^ e);
 	private: bool save_convertToInt64(String^ str);
 	private: String^ findLastLetter(String^ user_city);
+	private: String^ findFirstLetter(String^ user_city);
 	private: bool digitsCheck(String^ string);
 	private: bool update_handler();
 	private: System::Void restarting();
@@ -337,9 +330,12 @@ namespace Practise {
 	restarting();
 }
 	private: bool cityCheck(String^ city_user, String^ city_comp);
-private: System::Void правилаИгрыToolStripMenuItem1_Click(System::Object^ sender, System::EventArgs^ e) {
-	MessageBox::Show("Правила игры в Города.\nВы вводите город, программа предлагает свой, вы вводите новый город, первая буква которого совпадает с  последней буквой названного программой города");
-}
+	private: System::Void правилаИгрыToolStripMenuItem1_Click(System::Object^ sender, System::EventArgs^ e) {
+		MessageBox::Show("Правила игры в Города.\nВы вводите город, программа предлагает свой, вы вводите новый город, первая буква которого совпадает с  последней буквой названного программой города");
+	}			
+	
+
+
 };
 
 

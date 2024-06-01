@@ -51,55 +51,36 @@ System::Void Practise::Game::fromFileToData(String^ filePath, Dictionary<String^
 
 
 // функция, выводящая следующий город
-System::Void Practise::Game::CompareWordsWithKey( String^ key,  String^ inputString, Dictionary<String^, List<String^>^>^ dict)
+System::Void Practise::Game::CompareWordsWithKey( String^ key, String^ key_1, String^ inputString, Dictionary<String^, List<String^>^>^ dict)
 {
-    bool pass = false;
     // Проверяем, есть ли ключ в словаре
-   
     if (!dict->ContainsKey(key))
     {
         Console::WriteLine("Ключ '{key}' отсутствует в словаре.");
         MessageBox::Show("С такой буквы никакое слово не начинается!", "Не жульничать!");
         return;
     }
-    if (!usedWords->ContainsKey(key)) pass = true;
     // Находим неиспользованный город, кот неравен данному, и выводим его
     for each (String ^ city in dict[key])
     {   
-        if (pass) {
-            if (!String::Equals(inputString, city, StringComparison::OrdinalIgnoreCase)) {
-
-                labelPrint(city);
-                last_city = city;
-                usedWords[key]->Add(city);
-                countElems--;
-                if (update_handler()) {
-                    MessageBox::Show("Вы выиграли!", "Victory", MessageBoxButtons::OK, MessageBoxIcon::Information);
-                    restarting();
-                }
-                break;
-            }
-        }
-        else
-        {
-            if (!String::Equals(inputString, city, StringComparison::OrdinalIgnoreCase) && (!usedWords[key]->Contains(city))) {
-
-                labelPrint(city);
-                last_city = city;
-
-                usedWords[key]->Add(city);
-                countElems--;
-                if (update_handler()) {
-                    MessageBox::Show("Вы выиграли!", "Victory", MessageBoxButtons::OK, MessageBoxIcon::Information);
-
-                    restarting();
-                }
-                break;
-            }
-        }
         
-    }
+        if (!String::Equals(inputString, city, StringComparison::OrdinalIgnoreCase) && (!usedWords[key]->Contains(city))) {
 
+            labelPrint(city);
+            last_city = city;
+
+            // добавляем введенное и выведенное слова в использованные, чтобы избежать повтора
+            usedWords[key]->Add(city);
+
+            countElems--;
+            if (update_handler()) {
+                MessageBox::Show("Вы выиграли!", "Victory", MessageBoxButtons::OK, MessageBoxIcon::Information);
+
+                restarting();
+            }
+            break;
+        }
+    }
 }
 
 System::Void Practise::Game::labelPrint(String^ city)
@@ -111,7 +92,38 @@ System::Void Practise::Game::labelPrint(String^ city)
 System::Void Practise::Game::answer_Click(System::Object^ sender, System::EventArgs^ e)
  {
     String^ user_city = userInput->Text;
+
     String^ key = findLastLetter(user_city);
+    String^ key1 = findFirstLetter(user_city);
+    //проверяем, есть ли вообще такой город
+    unknownCity = true;
+    for each (String ^ city in wordMap[key1]) {
+        if (String::Equals(user_city, city, StringComparison::OrdinalIgnoreCase)) {
+            unknownCity = false;
+            break;
+        }
+    }
+    // если нету, то сообщаем об этом 
+    if (unknownCity)
+    {
+        MessageBox::Show("Я не знаю такого города, назови другой!");
+        return;
+    }
+
+    // проверяем, был ли город использован
+    for each (String ^ city in usedWords[key1]) {
+        if (String::Equals(user_city, city, StringComparison::OrdinalIgnoreCase)) {
+            MessageBox::Show("Такой город уже был!");
+            return;
+
+        }
+    }
+
+    // добавляем город в использованные
+    usedWords[key1]->Add(user_city);
+    countElems--;
+    
+
     if (last_city != "") {
         if (cityCheck(user_city, last_city) == false) 
         {
@@ -119,9 +131,10 @@ System::Void Practise::Game::answer_Click(System::Object^ sender, System::EventA
             return;
         }
     }
-    if (!String::IsNullOrWhiteSpace(user_city) && digitsCheck(user_city)) {
+    if (!String::IsNullOrWhiteSpace(user_city) && !digitsCheck(user_city)) {
         if (save_convertToInt64(key)) { MessageBox::Show("В слове есть цифра!", "Не жульничать!"); return; }
-        CompareWordsWithKey(key, user_city, wordMap);
+        // функция для сравнения слов
+        CompareWordsWithKey(key, key1, user_city, wordMap);
     }
     
 }
@@ -140,30 +153,43 @@ bool Practise::Game::save_convertToInt64(String^ str)
     return true;
 }
 
+// находим последнюю букву
 String^ Practise::Game::findLastLetter(String^ user_city)
 {
-    String^ last_letter = "";
-    if (firsttime) {
+    String^ last_letter = user_city->Substring(user_city->Length - 1);
+    String^ ll_1 = "ы";
+    String^ ll_2 = "ъ";
+    String^ ll_3 = "ь";
+    if (last_letter == ll_1 || last_letter == ll_2 || last_letter == ll_3) {
+        last_letter = user_city->Substring(user_city->Length - 2, 1);
+    }
+   /* if (firsttime) {
         last_letter = user_city->Substring(0,1 )->ToLower();
 
     }
     else {
         last_letter = user_city->Substring(user_city->Length - 1);
 
-    }
+    }*/
     return last_letter;
 }
 
+// находим первую букву
+String^ Practise::Game::findFirstLetter(String^ user_city)
+{
+    return user_city->Substring(0, 1)->ToLower();
+}
+
+// функция для проверки наличия в слове цифр
 bool Practise::Game::digitsCheck(String^ string)
 {
-    String^ myString = "Пример строки";
-
     bool hasDigits = false;
     bool hasPunctuation = false;
     bool hasSpaces = false;
 
-    for each (char c in myString)
+    for (int i = 0; i < string->Length; i++)
     {
+        wchar_t c = string[i];
         if (Char::IsDigit(c))
         {
             hasDigits = true;
@@ -176,7 +202,9 @@ bool Practise::Game::digitsCheck(String^ string)
         {
             hasSpaces = true;
         }
+    
     }
+
 
     return hasDigits && hasPunctuation && hasSpaces;
 }
@@ -214,4 +242,3 @@ bool Practise::Game::cityCheck(String^ city_user, String^ city_comp)
     }
     return true;
 }
-

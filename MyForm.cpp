@@ -92,7 +92,7 @@ System::Void Practise::MyForm::оПрограммеToolStripMenuItem_Click(System::Object^
 	MessageBox::Show("Данный программные продукт представляет собой новейшую базу данных для слабых ПК\nВсе права защищены", "Внимание");
 }
 
-// Сохраняем данные в файл ----------------
+// Сохраняем данные в файл 
 System::Void Practise::MyForm::saveData_Click(System::Object^ sender, System::EventArgs^ e)
 {
 	SaveFileDialog^ SaveFileDialog1 = gcnew SaveFileDialog;
@@ -119,7 +119,7 @@ System::Void Practise::MyForm::saveData_Click(System::Object^ sender, System::Ev
 	}
 }
 
-// Обновляем данные ----------
+// Обновляем данные 
 System::Void Practise::MyForm::resetData(String^ filename)
 {
     if (fileUploaded)
@@ -164,23 +164,7 @@ System::Void Practise::MyForm::resetData(String^ filename)
     }
 }
 
-
-// Данная функция регистрирует изменения в текстбоксах
-//System::Void Practise::MyForm::TextChanged(System::Object^ sender, System::EventArgs^ e)
-//{
-//    if (fileUploaded)
-//    {
-//        //resetData("example.txt");
-//        if (upplied)
-//            UpdateMatchingRows();
-//        else return;
-//    }
-//    else {
-//        MessageBox::Show("Сначала нужно загрузить файл", "Ошибка");
-//    }
-//}
-
-
+// Данная функция сравнивает 2 числовых значения (вспомогательная для запроса)
 bool Practise::MyForm::NumbersAction(String^ sign, Int64 number, Int64 current_num)
 {
     if (sign == ">") {
@@ -196,7 +180,7 @@ bool Practise::MyForm::NumbersAction(String^ sign, Int64 number, Int64 current_n
     return false;
 }
 
-
+// Данная функция изменяет знак условия для запроса
 System::Void Practise::MyForm::button_sign_changevalue(System::Object^ sender)
 {
     array<String^>^ texts = gcnew array<String^> { ">", "<", "<=", ">=", "=", ">"};
@@ -392,7 +376,8 @@ System::Void Practise::MyForm::UpdateMatchingRows()
     
 
 }
-
+ 
+// Данная функция конвертирует строку в число
 Int64 Practise::MyForm::save_convertToInt64(String^ str, String^ error_message)
 {
     Int64 num;
@@ -409,6 +394,7 @@ Int64 Practise::MyForm::save_convertToInt64(String^ str, String^ error_message)
     return num;
 }
 
+// Данная функция является вспомогательной для запросов
 Boolean Practise::MyForm::signCondition(Int64 num1, Int64 num2, String^ sign)
 {
     if (sign == ">") return num2 > num1;
@@ -419,6 +405,7 @@ Boolean Practise::MyForm::signCondition(Int64 num1, Int64 num2, String^ sign)
     return false;
 }
 
+// Данная функция проверяет на корректность ввода данных в таблице
 System::Void Practise::MyForm::dataGridView1_CellValidating(System::Object^ sender, System::Windows::Forms::DataGridViewCellValidatingEventArgs^ e)
 {
     if (!isCellValueChanged) {
@@ -459,6 +446,7 @@ System::Void Practise::MyForm::dataGridView1_CellValidating(System::Object^ send
   
 }
 
+// Проверяем на изменения в таблице
 System::Void Practise::MyForm::dataGridView1_CellEndEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e)
 {
     isCellValueChanged = false;
