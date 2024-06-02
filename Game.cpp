@@ -92,9 +92,17 @@ System::Void Practise::Game::labelPrint(String^ city)
 System::Void Practise::Game::answer_Click(System::Object^ sender, System::EventArgs^ e)
  {
     String^ user_city = userInput->Text;
-
+    if (!String::IsNullOrWhiteSpace(user_city) && !digitsCheck(user_city)) {
     String^ key = findLastLetter(user_city);
+    if (key == "") { 
+        MessageBox::Show("Я такого города не знаю!", "Error");
+        return;
+    }
     String^ key1 = findFirstLetter(user_city);
+    if (key1 == "") {
+        MessageBox::Show("Я такого города не знаю!", "Error");
+        return;
+    }
     //проверяем, есть ли вообще такой город
     unknownCity = true;
     for each (String ^ city in wordMap[key1]) {
@@ -134,26 +142,13 @@ System::Void Practise::Game::answer_Click(System::Object^ sender, System::EventA
     
 
     
-    if (!String::IsNullOrWhiteSpace(user_city) && !digitsCheck(user_city)) {
-        if (save_convertToInt64(key)) { MessageBox::Show("В слове есть цифра!", "Не жульничать!"); return; }
+    
         // функция для сравнения слов
         CompareWordsWithKey(key, key1, user_city, wordMap);
     }
-    
-}
-
-bool Practise::Game::save_convertToInt64(String^ str)
-{
-    Int64 num;
-    try
-    {
-        num = System::Convert::ToInt64(str);
+    else {
+        MessageBox::Show("Некорректно введен город!", "Error");
     }
-    catch (System::FormatException^)
-    {
-        return false;
-    }
-    return true;
 }
 
 // находим последнюю букву
@@ -161,7 +156,11 @@ String^ Practise::Game::findLastLetter(String^ user_city)
 {
     Int32 num = 1;
     String^ last_letter = user_city->Substring(user_city->Length - 1);
+ 
     while (!wordMap->ContainsKey(last_letter)) {
+        if (num > user_city->Length) {
+            return "";
+        }
         last_letter = user_city->Substring(user_city->Length - num, 1);
         num++;
     }
@@ -172,6 +171,8 @@ String^ Practise::Game::findLastLetter(String^ user_city)
 // находим первую букву
 String^ Practise::Game::findFirstLetter(String^ user_city)
 {
+    String^ firstletter = user_city->Substring(0, 1)->ToLower();
+    if (!wordMap->ContainsKey(firstletter)) return "";
     return user_city->Substring(0, 1)->ToLower();
 }
 
@@ -180,7 +181,6 @@ bool Practise::Game::digitsCheck(String^ string)
 {
     bool hasDigits = false;
     bool hasPunctuation = false;
-    bool hasSpaces = false;
 
     for (int i = 0; i < string->Length; i++)
     {
@@ -188,20 +188,13 @@ bool Practise::Game::digitsCheck(String^ string)
         if (Char::IsDigit(c))
         {
             hasDigits = true;
-        }
-        else if (Char::IsPunctuation(c))
-        {
-            hasPunctuation = true;
-        }
-        else if (Char::IsWhiteSpace(c))
-        {
-            hasSpaces = true;
+            break;
         }
     
     }
 
 
-    return hasDigits && hasPunctuation && hasSpaces;
+    return hasDigits;
 }
 
 bool Practise::Game::update_handler()

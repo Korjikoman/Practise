@@ -322,7 +322,6 @@ namespace Practise {
 	private: System::Void Practise::Game::CompareWordsWithKey(String^ key, String^ key_1, String^ inputString, Dictionary<String^, List<String^>^>^ dict);
 	private: System::Void labelPrint(String^ city);
 	private: System::Void answer_Click(System::Object^ sender, System::EventArgs^ e);
-	private: bool save_convertToInt64(String^ str);
 	private: String^ findLastLetter(String^ user_city);
 	private: String^ findFirstLetter(String^ user_city);
 	private: bool digitsCheck(String^ string);
