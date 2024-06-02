@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <iostream>
 #include <cwctype>
-
+#include <random>
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -60,27 +60,27 @@ System::Void Practise::Game::CompareWordsWithKey( String^ key, String^ key_1, St
         MessageBox::Show("С такой буквы никакое слово не начинается!", "Не жульничать!");
         return;
     }
-    // Находим неиспользованный город, кот неравен данному, и выводим его
-    for each (String ^ city in dict[key])
-    {   
-        
-        if (!String::Equals(inputString, city, StringComparison::OrdinalIgnoreCase) && (!usedWords[key]->Contains(city))) {
+    // список городов на данную букву
+    List<String^>^ cities = dict[key];
 
-            labelPrint(city);
-            last_city = city;
-
-            // добавляем введенное и выведенное слова в использованные, чтобы избежать повтора
-            usedWords[key]->Add(city);
-
-            countElems--;
-            if (update_handler()) {
-                MessageBox::Show("Вы выиграли!", "Victory", MessageBoxButtons::OK, MessageBoxIcon::Information);
-
-                restarting();
-            }
-            break;
-        }
+    // Рандомно находим неиспользованный город, кот неравен данному, и выводим его
+    Int32 randNum = randGenerator(dict[key]->Count);
+    String^ city = cities[randNum - 1];
+    while (usedWords[key]->Contains(city)) {
+        Int32 randNum = randGenerator(dict[key]->Count);
+        String^ city = cities[randNum - 1];
     }
+    // Выводим город
+    labelPrint(city);
+    // Добавляем город в использованные
+    usedWords[key]->Add(city);
+    last_city = city;
+    countElems--;
+    if (update_handler()) {
+        MessageBox::Show("Вы выиграли!", "Victory", MessageBoxButtons::OK, MessageBoxIcon::Information);
+        restarting();
+    }
+
 }
 
 System::Void Practise::Game::labelPrint(String^ city)
@@ -110,13 +110,22 @@ System::Void Practise::Game::answer_Click(System::Object^ sender, System::EventA
         return;
     }
 
-    // проверяем, был ли город использован
-    for each (String ^ city in usedWords[key1]) {
-        if (String::Equals(user_city, city, StringComparison::OrdinalIgnoreCase)) {
-            MessageBox::Show("Такой город уже был!");
-            return;
+    // проверяем первую букву города
+    if (last_city != "") {
+        String^ last_city_last_letter = findLastLetter(last_city);
 
+        if (last_city_last_letter != key1)
+        {
+            MessageBox::Show("Первая буква не совпадает с последней!", "Error");
+            return;
         }
+    }
+
+    // проверяем, был ли город использован
+    if (usedWords[key1]->Contains(user_city))
+    {
+        MessageBox::Show("Такой город уже был");
+        return;
     }
 
     // добавляем город в использованные
@@ -124,13 +133,7 @@ System::Void Practise::Game::answer_Click(System::Object^ sender, System::EventA
     countElems--;
     
 
-    if (last_city != "") {
-        if (cityCheck(user_city, last_city) == false) 
-        {
-            MessageBox::Show("Первая буква не совпадает с последней!", "Error");
-            return;
-        }
-    }
+    
     if (!String::IsNullOrWhiteSpace(user_city) && !digitsCheck(user_city)) {
         if (save_convertToInt64(key)) { MessageBox::Show("В слове есть цифра!", "Не жульничать!"); return; }
         // функция для сравнения слов
@@ -156,21 +159,13 @@ bool Practise::Game::save_convertToInt64(String^ str)
 // находим последнюю букву
 String^ Practise::Game::findLastLetter(String^ user_city)
 {
+    Int32 num = 1;
     String^ last_letter = user_city->Substring(user_city->Length - 1);
-    String^ ll_1 = "ы";
-    String^ ll_2 = "ъ";
-    String^ ll_3 = "ь";
-    if (last_letter == ll_1 || last_letter == ll_2 || last_letter == ll_3) {
-        last_letter = user_city->Substring(user_city->Length - 2, 1);
+    while (!wordMap->ContainsKey(last_letter)) {
+        last_letter = user_city->Substring(user_city->Length - num, 1);
+        num++;
     }
-   /* if (firsttime) {
-        last_letter = user_city->Substring(0,1 )->ToLower();
 
-    }
-    else {
-        last_letter = user_city->Substring(user_city->Length - 1);
-
-    }*/
     return last_letter;
 }
 
@@ -224,21 +219,24 @@ System::Void Practise::Game::restarting()
 
 }
 
-bool Practise::Game::cityCheck(String^ city_user, String^ city_comp)
+
+Int32 Practise::Game::randGenerator(Int32 array_length)
 {
-    if (outputCity->Visible) {
-        std::setlocale(LC_ALL, "ru_RU.UTF-8");
-        if (city_user->Length == 0 || city_comp->Length == 0) {
-            return false;
-        }
-
-        wchar_t firstLetterUser = std::towlower(city_user[0]);
-        wchar_t lastLetterComp = city_comp[city_comp->Length - 1];
-        if (lastLetterComp == L'ы' || lastLetterComp == L'ь' || lastLetterComp == L'ъ') {
-            lastLetterComp = city_comp[city_comp->Length - 2];
-        }
-
-        return (firstLetterUser == lastLetterComp);
-    }
-    return true;
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist(1, array_length);
+    Int32 randNumber = dist(rng);
+    return randNumber;
 }
+
+bool Practise::Game::isUsed(String^ user_city, String^ key)
+{
+    for each (String ^ city in usedWords[key]) {
+        if (String::Equals(user_city, city, StringComparison::OrdinalIgnoreCase)) {
+            return true;
+
+        }
+    }
+    return false;
+}
+

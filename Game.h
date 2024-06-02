@@ -98,6 +98,7 @@ namespace Practise {
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Game::typeid));
 			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->выходToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->правилаИгрыToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -228,7 +229,7 @@ namespace Practise {
 			this->secret_word->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 21.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->secret_word->ForeColor = System::Drawing::Color::Cornsilk;
-			this->secret_word->Location = System::Drawing::Point(210, 55);
+			this->secret_word->Location = System::Drawing::Point(287, 86);
 			this->secret_word->Name = L"secret_word";
 			this->secret_word->Size = System::Drawing::Size(217, 33);
 			this->secret_word->TabIndex = 39;
@@ -237,7 +238,7 @@ namespace Practise {
 			// 
 			// userInput
 			// 
-			this->userInput->Location = System::Drawing::Point(81, 166);
+			this->userInput->Location = System::Drawing::Point(137, 169);
 			this->userInput->Name = L"userInput";
 			this->userInput->Size = System::Drawing::Size(283, 20);
 			this->userInput->TabIndex = 40;
@@ -259,7 +260,7 @@ namespace Practise {
 			this->answer->BackColor = System::Drawing::Color::IndianRed;
 			this->answer->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->answer->Location = System::Drawing::Point(382, 166);
+			this->answer->Location = System::Drawing::Point(454, 166);
 			this->answer->Name = L"answer";
 			this->answer->Size = System::Drawing::Size(75, 23);
 			this->answer->TabIndex = 42;
@@ -284,6 +285,7 @@ namespace Practise {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(763, 363);
 			this->Controls->Add(this->restart);
 			this->Controls->Add(this->answer);
@@ -317,7 +319,7 @@ namespace Practise {
 	}
 	   
 	private: System::Void Practise::Game::fromFileToData(String^ filePath, Dictionary<String^, List<String^>^>^ wordMap);
-	private:  System::Void Practise::Game::CompareWordsWithKey(String^ key, String^ key_1, String^ inputString, Dictionary<String^, List<String^>^>^ dict);
+	private: System::Void Practise::Game::CompareWordsWithKey(String^ key, String^ key_1, String^ inputString, Dictionary<String^, List<String^>^>^ dict);
 	private: System::Void labelPrint(String^ city);
 	private: System::Void answer_Click(System::Object^ sender, System::EventArgs^ e);
 	private: bool save_convertToInt64(String^ str);
@@ -328,12 +330,12 @@ namespace Practise {
 	private: System::Void restarting();
 	private: System::Void restart_Click(System::Object^ sender, System::EventArgs^ e) {
 	restarting();
-}
-	private: bool cityCheck(String^ city_user, String^ city_comp);
+	}
+	private: Int32 randGenerator(Int32 array_length);
 	private: System::Void правилаИгрыToolStripMenuItem1_Click(System::Object^ sender, System::EventArgs^ e) {
 		MessageBox::Show("Правила игры в Города.\nВы вводите город, программа предлагает свой, вы вводите новый город, первая буква которого совпадает с  последней буквой названного программой города");
 	}			
-	
+	private: bool isUsed(String^ user_city, String^ key);
 
 
 };
