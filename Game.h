@@ -65,7 +65,8 @@ namespace Practise {
 
 	private:Dictionary<String^, List<String^>^>^ wordMap = gcnew Dictionary<String^, List<String^>^>();
 	private: String^ filePath = "cities.txt";
-
+	private: Int32 score = 0;
+	private: Int32 best_score;
 
 	private: System::Windows::Forms::Label^ secret_word;
 
@@ -83,6 +84,11 @@ namespace Practise {
 	private: System::Windows::Forms::Button^ restart;
 	private: int countElems = 0;
 	private: String^ last_city = "";
+	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Label^ label_score;
+	private: System::Windows::Forms::Label^ label2;
+	private: System::Windows::Forms::Label^ best_score_label;
+
 	private: bool unknownCity;
 	private:
 		/// <summary>
@@ -118,6 +124,10 @@ namespace Practise {
 			this->outputCity = (gcnew System::Windows::Forms::Label());
 			this->answer = (gcnew System::Windows::Forms::Button());
 			this->restart = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label_score = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->best_score_label = (gcnew System::Windows::Forms::Label());
 			this->contextMenuStrip1->SuspendLayout();
 			this->contextMenuStrip3->SuspendLayout();
 			this->contextMenuStrip4->SuspendLayout();
@@ -229,7 +239,7 @@ namespace Practise {
 			this->secret_word->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 21.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->secret_word->ForeColor = System::Drawing::Color::Cornsilk;
-			this->secret_word->Location = System::Drawing::Point(287, 86);
+			this->secret_word->Location = System::Drawing::Point(256, 43);
 			this->secret_word->Name = L"secret_word";
 			this->secret_word->Size = System::Drawing::Size(217, 33);
 			this->secret_word->TabIndex = 39;
@@ -260,6 +270,7 @@ namespace Practise {
 			this->answer->BackColor = System::Drawing::Color::IndianRed;
 			this->answer->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
+			this->answer->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
 			this->answer->Location = System::Drawing::Point(454, 166);
 			this->answer->Name = L"answer";
 			this->answer->Size = System::Drawing::Size(75, 23);
@@ -271,8 +282,10 @@ namespace Practise {
 			// restart
 			// 
 			this->restart->BackColor = System::Drawing::Color::IndianRed;
+			this->restart->BackgroundImageLayout = System::Windows::Forms::ImageLayout::None;
 			this->restart->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
+			this->restart->ForeColor = System::Drawing::SystemColors::ControlLightLight;
 			this->restart->Location = System::Drawing::Point(559, 318);
 			this->restart->Name = L"restart";
 			this->restart->Size = System::Drawing::Size(122, 23);
@@ -281,12 +294,66 @@ namespace Practise {
 			this->restart->UseVisualStyleBackColor = false;
 			this->restart->Click += gcnew System::EventHandler(this, &Game::restart_Click);
 			// 
+			// label1
+			// 
+			this->label1->BackColor = System::Drawing::SystemColors::Info;
+			this->label1->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label1->Location = System::Drawing::Point(559, 43);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(79, 31);
+			this->label1->TabIndex = 44;
+			this->label1->Text = L"Score";
+			// 
+			// label_score
+			// 
+			this->label_score->BackColor = System::Drawing::SystemColors::ActiveCaption;
+			this->label_score->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->label_score->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label_score->Location = System::Drawing::Point(657, 43);
+			this->label_score->Name = L"label_score";
+			this->label_score->Size = System::Drawing::Size(39, 31);
+			this->label_score->TabIndex = 45;
+			this->label_score->Text = L"0";
+			this->label_score->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
+			// label2
+			// 
+			this->label2->BackColor = System::Drawing::SystemColors::Info;
+			this->label2->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->label2->Location = System::Drawing::Point(24, 43);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(119, 31);
+			this->label2->TabIndex = 46;
+			this->label2->Text = L"Best score";
+			// 
+			// best_score_label
+			// 
+			this->best_score_label->BackColor = System::Drawing::Color::Coral;
+			this->best_score_label->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
+			this->best_score_label->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14.25F, System::Drawing::FontStyle::Regular,
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
+			this->best_score_label->Location = System::Drawing::Point(162, 43);
+			this->best_score_label->Name = L"best_score_label";
+			this->best_score_label->Size = System::Drawing::Size(39, 31);
+			this->best_score_label->TabIndex = 47;
+			this->best_score_label->Text = L"0";
+			this->best_score_label->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
 			// Game
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(763, 363);
+			this->Controls->Add(this->best_score_label);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->label_score);
+			this->Controls->Add(this->label1);
 			this->Controls->Add(this->restart);
 			this->Controls->Add(this->answer);
 			this->Controls->Add(this->outputCity);
@@ -309,11 +376,12 @@ namespace Practise {
 #pragma endregion
 	private: System::Void Game_Load(System::Object^ sender, System::EventArgs^ e) {
 		fromFileToData(filePath, wordMap);
-			
+		upload_best_score();
 	}
 
 		   
 	private: System::Void âûõîäToolStripMenuItem1_Click(System::Object^ sender, System::EventArgs^ e) {
+		save_best_score();
 		this->Hide();
 		obj->Show();
 	}
@@ -336,7 +404,8 @@ namespace Practise {
 	}			
 	private: bool isUsed(String^ user_city, String^ key);
 
-
+	private: System::Void save_best_score();
+	private: System::Void upload_best_score();
 };
 
 

@@ -16,6 +16,9 @@ System::Void Practise::Game::fromFileToData(String^ filePath, Dictionary<String^
         StreamReader^ file = gcnew StreamReader(filePath);
         String^ line;
 
+        
+
+
         while ((line = file->ReadLine()) != nullptr)
         {
             array<String^>^ words = line->Split('\t'); // Разделение строки на слова
@@ -72,6 +75,15 @@ System::Void Practise::Game::CompareWordsWithKey( String^ key, String^ key_1, St
     }
     // Выводим город
     labelPrint(city);
+    
+    // Обновляем рейтинг
+    score++;
+    label_score->Text = score.ToString();
+    if (score > best_score) {
+        best_score = score;
+        best_score_label->Text = best_score.ToString();
+    }
+
     // Добавляем город в использованные
     usedWords[key]->Add(city);
     last_city = city;
@@ -206,10 +218,14 @@ System::Void Practise::Game::restarting()
 {
     wordMap->Clear();
     usedWords->Clear();
+    last_city = "";
+    save_best_score();
+    score = 0;
+    label_score->Text = "0";
     outputCity->Visible = false;
     countElems = 0;
     fromFileToData(filePath, wordMap);
-
+    upload_best_score();
 }
 
 
@@ -221,6 +237,47 @@ Int32 Practise::Game::randGenerator(Int32 array_length)
     Int32 randNumber = dist(rng);
     return randNumber;
 }
+
+System::Void Practise::Game::save_best_score()
+{
+    try
+    {
+        StreamWriter^ writer = gcnew StreamWriter("score.txt");
+
+        writer->WriteLine(best_score.ToString());
+
+        writer->Close();
+
+        Console::WriteLine("Число {0} успешно сохранено в файл {1}.", best_score, "score.txt");
+    }
+    catch (Exception^ e)
+    {
+        Console::WriteLine("Произошла ошибка: {0}", e->Message);
+    }
+}
+
+
+// Загружаем рекорд
+System::Void Practise::Game::upload_best_score()
+{
+    
+    StreamReader^ best_score_file = gcnew StreamReader("score.txt");
+    try
+    {
+        StreamReader^ reader = gcnew StreamReader("score.txt");
+        String^ line = reader->ReadLine();
+        reader->Close();
+        best_score = Int32::Parse(line);
+
+
+    }
+    catch (Exception^ e)
+    {
+        Console::WriteLine("Произошла ошибка: {0}", e->Message);
+    }
+    best_score_label->Text = best_score.ToString();
+}
+
 
 bool Practise::Game::isUsed(String^ user_city, String^ key)
 {
